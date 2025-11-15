@@ -1,6 +1,5 @@
 import java.util.Arrays;
 
-//need to split into the arrays, since this program assumes they have been split already
 public class Classifier{
     public static String[] classifyIPs(String[] addresses){
         if (addresses.length < 1) return new String[]{"Enter addresses"};

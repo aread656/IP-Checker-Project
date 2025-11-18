@@ -7,6 +7,6 @@ it('Bad IP Test', function(done){
         "21:aa:3b:22:77:9a",
         "101.201.301.401"]
     var a = 2
-    expect(badipcount.badIPs(t)).to.equal(["good","bad","good","bad"]);
+    expect(badipcount.badIPs(t)).to.deep.equal(["good","bad","good","bad"]);
     done()
 })

@@ -1,4 +1,5 @@
 import sys
+sys.path.insert(0,".");
 from totalvalidips import totalValidIPs
 
 """it('Bad IP Test', function(done){
@@ -11,7 +12,6 @@ from totalvalidips import totalValidIPs
     done()
 })"""
 
-sys.path.insert(0,".");
 def main():
     test_success = True;
     t = ["127.0.0.1",

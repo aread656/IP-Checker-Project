@@ -2,7 +2,6 @@ image: eclipse-temurin:21-jdk
 stages:
   - build
   - test
-  - run
 
 build:
   stage: build
@@ -16,7 +15,3 @@ test:
   stage: test
   script:
     - java -cp build ClassifierTest
-run:
-  stage: run
-  script:
-    - java -cp build Server

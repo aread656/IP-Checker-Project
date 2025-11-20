@@ -6,7 +6,7 @@ public class ClassifierTest{
         String[] result = Classifier.classifyIPs(input);
 
         for(int i = 0; i<input.length;i++){
-            if(result[i].equals(expected[i])){
+            if(!result[i].equals(expected[i])){
                 testSuccess = false;
             }
         }

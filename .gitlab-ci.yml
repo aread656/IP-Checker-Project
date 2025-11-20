@@ -1,20 +1,23 @@
-image: gradle:8.7-jdk21
+image: eclipse-temurin:21-jdk
 stages:
   - build
   - test
-
-cache:
-  paths:
-    - .gradle/
+  - run
 
 build:
   stage: build
   script:
-    - gradle build -x test
+    - mkdir -p build
+    - javac -d build *.java
   artifacts:
     paths:
       - build/
 test:
   stage: test
   script:
-    - gradle test
+    - java -cp build ClassifierTest
+run:
+  stage:
+    - run
+  script:
+    - java -cp build Server

@@ -1,0 +1,15 @@
+image: python:3.13-slim
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - python -m py_compile *.py
+    - python -m py_compile test/*.py
+
+test:
+  stage: test
+  script: python test/test-validips.py

@@ -17,7 +17,6 @@ test:
   script:
     - java -cp build ClassifierTest
 run:
-  stage:
-    - run
+  stage: run
   script:
     - java -cp build Server

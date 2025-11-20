@@ -1,21 +1,20 @@
-image: node:20
-
+image: eclipse-temurin:21-jdk
 stages:
   - build
   - test
 
 cache:
   paths:
-    - node_modules/
+    - .gradle/
 
-install_dependencies:
+build:
   stage: build
   script:
-    - npm ci
+    - gradle build -x test
   artifacts:
     paths:
-      - node_modules/
-
-testing:
+      - build/
+test:
   stage: test
-  script: npm test
+  script:
+    - gradle test

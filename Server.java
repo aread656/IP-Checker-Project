@@ -1,29 +1,38 @@
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
-
+import java.net.InetSocketAddress;
 import java.io.IOException;
 import java.io.OutputStream;
-
+/**
+ * Server handling for Classifier.java functionality
+ */
 public class Server{
-    public void HTTPRequest(HttpExchange exchange){
+    private static final int PORT = 83;
+    private static final String HOST = "0.0.0.0";
+    public static void main(String[] args)throws Exception{
+        System.out.println("Test");
+        HttpServer httpServer = HttpServer.create(new InetSocketAddress(HOST, PORT),0);
+        Server server = new Server();
+        httpServer.createContext("/",server::handleHTTPReq);
+        httpServer.start();
+    }
+    public void handleHTTPReq(HttpExchange exchange){
         String JSONResponse;
-
-        Headers headers = exchange.getRequestHeaders();
+        Headers headers = exchange.getResponseHeaders();
         headers.add("Content-Type", "application/json");
         headers.add("Access-Control-Allow-Origin", "*");
         String query = exchange.getRequestURI().getQuery();
         String items = get_url_parameters(query, "items");
-        if (items.isEmpty()){
+        if (items == null || items.isEmpty()){
             JSONResponse = emptyJSONResponse();
         }else{
             JSONResponse = validJSONResponse(items);
         }
         try{
             exchange.sendResponseHeaders(200, JSONResponse.length());
-            OutputStream stream = exchange.getResponseBody();
-            stream.write(JSONResponse.getBytes());
-            stream.close();
+            OutputStream os = exchange.getResponseBody();
+            os.write(JSONResponse.getBytes());
         }catch (IOException e){
             System.out.println(e);
         }
@@ -33,54 +42,44 @@ public class Server{
             return null;
         }
         for (String parameter: query.split("&")){
-            String[] parameter_parts = parameter.split("=");
-            if (parameter_parts.length > 1 && parameter_parts[0].equals(param)){
-                return parameter_parts[1];
+            String[] parts = parameter.split("=");
+            if (parts.length > 1 && parts[0].equals(param)){
+                return parts[1];
             }
         }
         return null;
     }
     public String emptyJSONResponse(){
-        String string = """
-            {
-                "error":true,
-                "input":[],
-                "result",[],
-                "output_message":"no inputs"
-            }
-            """;
-        return string;
+        return """
+        {"error":true,"input":[],"result":[],"output_message":"no inputs"}
+        """;
     }
-    public String validJSONResponse(String input){
-        String[] items = input.split(",");
-        for(String item:items){
-            item = item.trim();
+    public String validJSONResponse(String rawInput){
+        String[] items = rawInput.split(",");
+        for(int i=0; i<items.length;i++){
+            items[i] = items[i].trim();
         }
-        String JSONItems = "[";
+
+        StringBuilder JSONItems = new StringBuilder("[");
         for(int i = 0;i<items.length;i++){
-            JSONItems += "\""+items[i]+"\"";
+            JSONItems.append("\"").append(items[i]).append("\"");
             if (i < items.length-1){
-                JSONItems += ",";
+                JSONItems.append(",");
             };
         }
-        JSONItems += "]";
+        JSONItems.append("]");
 
-        String[] answer = Classifier.classifyIPs(items);
-        String JSONAnswer = "[";
-        for(int i = 0;i<answer.length;i++){
-            JSONAnswer += "\""+answer[i]+"\"";
-            if (i < answer.length-1){
-                JSONAnswer += ",";
-            };
+        String[] classifications = Classifier.classifyIPs(items);
+        StringBuilder JSONAnswer = new StringBuilder("[");
+        for(int i = 0;i < classifications.length; i++){
+            JSONAnswer.append("\"").append(classifications[i]).append("\"");
+            if (i < classifications.length-1){JSONAnswer.append(",");}
         }
-        JSONAnswer += "]";
+        JSONAnswer.append("]");
         
-        String JSONOutput = "{"+
-            "\"error\":false, "+
+        String JSONOutput = "{"+"\"error\":false, "+
             "\"input\":" + JSONItems + 
-            ", " + "\"answer\": " + 
-            JSONAnswer + "}"; 
-
+            ", " + "\"answer\": " + JSONAnswer + "}"; 
         return JSONOutput;
     }
 }

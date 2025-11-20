@@ -1,11 +1,20 @@
 import java.util.Arrays;
-
+/**
+ * Classifies IP addresses as IPV4/6 or Unknown
+ */
 public class Classifier{
     public static String[] classifyIPs(String[] addresses){
-        if (addresses.length < 1) return new String[]{"Enter addresses"};
+        if (addresses == null || addresses.length == 0){
+            return new String[]{"No addresses given"};
+        }
         String[] results = new String[addresses.length];
         for(int i = 0; i<results.length;i++){
             String address = addresses[i];
+
+            if(address == null||address.isEmpty()){
+                results[i] = "Unknown";
+                continue;
+            }
             if (address.contains(".")){
                 results[i] = "IPV4";
             }else if(address.contains(":")){

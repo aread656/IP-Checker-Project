@@ -1,0 +1,21 @@
+image: gcc:14.2
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - g++ -std=c++17 -O2 server.cpp countryinfo.cpp -o server
+    - g++ -std=c++17 -O2 test/*.cpp -o test_binary
+  artifacts:
+    paths:
+      - server
+      - test_binary
+test:
+  stage: test
+  dependencies:
+    - build
+  script: 
+    - ./test_binary

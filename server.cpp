@@ -3,21 +3,60 @@
 #include <string>
 #include <vector>
 using namespace std;
+/**
+ * HTTP request gets items split by commas. parse_items splits
+ * into individual items for later processing in the form of a 
+ * string vector
+ */
+vector<string> parse_items(const string &items){
+    vector<string> output;
+    string currentString;
+    for (char c:items){
+        if(c == ','){
+            output.push_back(currentString);
+            currentString = "";
+        }else{
+            currentString+= c;
+        }
+    }
+    output.push_back(currentString);
+    return output;
+}
 
+/**
+ * Establishes httpconnection using httplib c++ header file,
+ * retrieved from the raw github repository
+ * https://raw.githubusercontent.com/yhirose/cpp-httplib/refs/heads/master/httplib.h
+ */
 int main(){
-    int const PORT = 82;
+    int const PORT = 84;
     string const HOST = "0.0.0.0";
     httplib::Server server;
     server.Get("/", [](const httplib::Request &req, httplib::Response &res) {
         res.set_header("Content-Type","application/json");
         res.set_header("Access-Control-Allow-Origin","*");
+        //getting items from http request
         string items = req.get_param_value("items");
         if(items.empty()){
             res.set_content("{\"error\":true,\"input\":[],\"answer\":[],\"message\":\"No inputs were given\"}","application/json");
             return;
         }
-        string result = countryinfo(items);
-        string JSONOutput = "{\"error\":false,\"answer\":\"" + result + "\"}";
+        //splitting items into string vector using parse_items
+        vector<string> split_items = parse_items(items);
+        vector<string> result;
+        //returning countryinfo for each
+        for (const auto& ip: split_items){
+            result.push_back(countryinfo(ip));
+        }
+        //building up outputted JSON
+        string JSONOutput = "{\"error\":false,\"answer\":[";
+        for (int i = 0; i < result.size(); i++){
+            if (i != 0){
+                JSONOutput += ",";
+            }
+            JSONOutput += "\"" + result[i] + "\"";
+        }
+        JSONOutput += "]}";
         res.set_content(JSONOutput,"application/json");
     });
     server.listen(HOST, PORT);

@@ -2,15 +2,7 @@ import sys
 sys.path.insert(0,".");
 from totalvalidips import totalValidIPs
 
-def main():
-    print(test1())
-    print(test2())
-    
-if __name__ == "__main__":
-    main()
-
-def test1():
-    test_success = True;
+def test1() -> bool:
     t = ["127.0.0.1",
         "100.200.300.400",
         "21:aa:3b:22:77:9a",
@@ -18,26 +10,23 @@ def test1():
         "....."]
     a = 4
     r = totalValidIPs(t)
-    if (r!=a):
-        test_success = False
-    
-    if (test_success):
-        sys.exit(0)
-    else:
-        sys.exit(1)
+    return r == a
 
-def test2():
-    test_success = True;
+def test2() -> bool:
     t = ["::1","1.1.1.1"]
     a = 4
     r = totalValidIPs(t)
-    if (r!=a):
-        test_success = False
-    
-    if (test_success):
+    return r == a
+
+def main():
+    success = test1() and test2()
+    if success:
         sys.exit(0)
     else:
         sys.exit(1)
+    
+if __name__ == "__main__":
+    main()
 
 """valid_ipv4s = [
     "0.0.0.0",              # lowest IPv4

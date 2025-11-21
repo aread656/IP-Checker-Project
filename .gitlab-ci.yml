@@ -7,8 +7,8 @@ stages:
 build:
   stage: build
   script:
-    - g++ -std=c++17 -O2 server.cpp countryinfo.cpp -o server
-    - g++ -std=c++17 -O2 test/*.cpp -o test_binary
+    - g++ -std=c++17 -O2 -I. server.cpp countryinfo.cpp -o server
+    - g++ -std=c++17 -O2 -I. test/*.cpp countryinfo.cpp -o test_binary
   artifacts:
     paths:
       - server

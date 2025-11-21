@@ -16,6 +16,8 @@ function badIPs(ipArray){
         const currentIP = ipArray[i]
         if (badIPList.includes(currentIP)){
             results.push("bad")
+        }else if(currentIP == ""){
+            results.push("bad")
         }else{
             results.push("good")
         }

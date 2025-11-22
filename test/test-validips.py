@@ -32,7 +32,7 @@ def test4() -> bool:
     return r == a
 
 def main():
-    success = test1() and test2() and test4()
+    success = test1() and test2() and test3() and test4()
     if success:
         sys.exit(0)
     else:

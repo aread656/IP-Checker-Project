@@ -10,8 +10,8 @@ string countryinfo(const string& ip){
         {100,"US"},{101,"UK"},{102,"China"}
     };
     //to do: exclude ipv6 addresses
-    if (ip.size() < 3) return "Unknown";
     if (ip.find(':') != string::npos) return "IPV6";
+    if (ip.size() < 3) return "Unknown";
     int prefix;
     try{
         prefix = stoi(ip.substr(0,3));

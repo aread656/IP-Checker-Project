@@ -38,7 +38,7 @@ def test4():
     return success
 
 def main():
-    success = test2() #and test3() and test4() test1() and 
+    success = test3()# and test1() and test2() and test4()
     if success:
         sys.exit(0)
     else:

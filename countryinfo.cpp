@@ -1,5 +1,6 @@
 #include <unordered_map>
 #include <string>
+#include <stdexcept>
 #include "countryinfo.h"
 using namespace std;
 
@@ -10,7 +11,13 @@ string countryinfo(const string& ip){
     };
     //to do: exclude ipv6 addresses
     if (ip.size() < 3) return "Unknown";
-    int prefix = stoi(ip.substr(0,3));
+    if (ip.find(':') != string::npos) return "IPV6";
+    int prefix;
+    try{
+        prefix = stoi(ip.substr(0,3));
+    } catch (const std::exception& e){
+        return "Unknown";
+    }
     if (country_map.count(prefix)){
         return country_map[prefix];
     }else{

@@ -2,6 +2,36 @@ import sys
 sys.path.insert(0,".")
 from totalvalidips import totalValidIPs
 
+def test1() -> bool:
+    t = ["127.0.0.1",
+        "100.200.300.400",
+        "21:aa:3b:22:77:9a",
+        "101.201.301.401",
+        "....."]
+    a = 1
+    r = totalValidIPs(t)
+    return r == a
+
+def test2() -> bool:
+    t = ["::1","1.1.1.1"]
+    a = 2
+    r = totalValidIPs(t)
+    return r == a
+
+def main():
+    success = test1() and test2()
+    if success:
+        sys.exit(0)
+    else:
+        sys.exit(1)
+    
+if __name__ == "__main__":
+    main()
+
+"""import sys
+sys.path.insert(0,".")
+from totalvalidips import totalValidIPs
+
 valid_ipv4s = [
     "0.0.0.0","255.255.255.255","1.2.3.4","192.168.1.1",
     "127.0.0.1","8.8.8.8","0.1.2.3","1.2.3.004","192.168.001.010"
@@ -45,4 +75,4 @@ def main():
         sys.exit(1)
     
 if __name__ == "__main__":
-    main()
+    main()"""

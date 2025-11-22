@@ -16,11 +16,11 @@ def test2() -> bool:
     r = totalValidIPs(t)
     return r == a
 
-def test3() -> bool:
+def test3() -> int:
     t = ["::","::1","1::","::1:2:3:4:5:6:7","1:2:3:4:5:6:7::","0:0:0:0:0:0:0:1","2001:db8::","0aaa::1",
     "1a:2a:3a:4a:5a:6a::","1a:2a:3a:4a:5a:6a:7a:8a","abcd:ef01:2345:6789:abcd:ef01:2345:6789",
     "0000:0000:0000:0000:0000:0000:0000:0000","FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF"]
-    a = 14
+    a = 13
     r = totalValidIPs(t)
     return r == a
 
@@ -31,8 +31,10 @@ def test4() -> bool:
     r = totalValidIPs(t)
     return r == a
 
+
 def main():
     success = test1() and test2() and test3() and test4()
+    print(success)
     if success:
         sys.exit(0)
     else:

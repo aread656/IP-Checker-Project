@@ -29,6 +29,10 @@ int main() {
     assert(countryinfo("100.-200.300.400")=="Unknown");
     assert(countryinfo("100.200.-300.400")=="Unknown");
     assert(countryinfo("100.200.300.-400")=="Unknown");
+    //valid start, invalid rest
+    assert(countryinfo("100.abc.blahblah.blahblah")=="Unknown");
+    assert(countryinfo("101.abc.blahblah.blahblah")=="Unknown");
+    assert(countryinfo("102.abc.blahblah.blahblah")=="Unknown");
     //IPV6 tests
     assert(countryinfo("::1") == "IPV6");
     assert(countryinfo("a:.43") == "Unknown" || countryinfo("a:.43") == "IPV6");

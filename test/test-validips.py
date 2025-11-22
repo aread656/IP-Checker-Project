@@ -10,6 +10,14 @@ def test2():
     result = totalValidIPs(invalid_ipv4s)
     success = len(invalid_ipv4s) == result
     return success
+def test3():
+    result = totalValidIPs(valid_ipv6s)
+    success = len(valid_ipv6s) == result
+    return success
+def test4():
+    result = totalValidIPs(invalid_ipv6s)
+    success = len(invalid_ipv6s) == result
+    return success
 
 def main():
     success = test1() and test2()

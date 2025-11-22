@@ -20,7 +20,7 @@ def test3() -> bool:
     t = ["::","::1","1::","::1:2:3:4:5:6:7","1:2:3:4:5:6:7::","0:0:0:0:0:0:0:1","2001:db8::","0aaa::1",
     "1a:2a:3a:4a:5a:6a::","1a:2a:3a:4a:5a:6a:7a:8a","abcd:ef01:2345:6789:abcd:ef01:2345:6789",
     "0000:0000:0000:0000:0000:0000:0000:0000","FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF","::ffff:192.168.1.1"]
-    a = 0
+    a = 14
     r = totalValidIPs(t)
     return r == a
 
@@ -32,7 +32,7 @@ def test4() -> bool:
     return r == a
 
 def main():
-    success = test1() and test2()
+    success = test1() and test2() and test3()
     if success:
         sys.exit(0)
     else:

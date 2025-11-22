@@ -12,4 +12,4 @@ build:
 
 test:
   stage: test
-  script: python test/test-validips.py
+  script: python test/test_validips.py

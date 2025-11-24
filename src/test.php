@@ -12,10 +12,10 @@ function test($result, $expected): void{
     }
 }
 
-test(getTotalEmptyIPs(items: "1.1.1.1,2.2.2.2,3.3.3.3"),0);
-test(getTotalEmptyIPs(items: ""),1);
-test(getTotalEmptyIPs(items: "1:2:3:4:,,"),2);
-test(getTotalEmptyIPs(items: ",a.b.c.d"),1);
-test(getTotalEmptyIPs(items: "127.0.,,0.1"),1);
+test(getTotalEmptyIPs("1.1.1.1,2.2.2.2,3.3.3.3"),0);
+test(getTotalEmptyIPs(""),1);
+test(getTotalEmptyIPs("1:2:3:4:,,"),2);
+test(getTotalEmptyIPs(",a.b.c.d"),1);
+test(getTotalEmptyIPs("127.0.,,0.1"),1);
 
 exit($fail);

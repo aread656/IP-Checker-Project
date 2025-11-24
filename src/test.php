@@ -8,7 +8,7 @@ function test($result, $expected): void{
         echo "Fail: got $result, expected $expected\n";
         $fail = 1;
     }else{
-        echo "Pass: %result == $expected\n";
+        echo "Pass: $result == $expected\n";
     }
 }
 

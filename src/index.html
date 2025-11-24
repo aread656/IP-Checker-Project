@@ -5,15 +5,10 @@
 
 <script type="text/javascript">
 
-let totalIPURL = "http://localhost:70/";
-let totalEmptyIPURL = "http://localhost:90/";
-let totalValidIPURL = "http://localhost:81"
-let badIPURL = "http://localhost:82"
-let classifierIPURL = "http://localhost:83";
-let countryIPURL = "http://localhost:84";
-
-//let totalIPURL = "http://ipcheckertotalips.esha.qpc.qubcloud.uk/";
-//let totalEmptyIPURL = "http://ipcheckertotalemptyips.esha.qpc.qubcloud.uk/";
+let config = {};
+fetch("config.json")
+    .then(response => response.json())
+    .then(json => {config = json;})
 
 function displayTotalIP(total_ips)
 {
@@ -62,7 +57,7 @@ function getTotalIPs()
           displayTotalIP(total_ips);
       }
   };
-  xhttp.open("GET",totalIPURL+"?items=" + items);
+  xhttp.open("GET",config.totalIPURL+"?items=" + items);
   xhttp.send();
   return;
 }
@@ -81,7 +76,7 @@ function getTotalEmptyIPs()
           displayTotalEmpty(total_empty_ips);
       }
   };
-  xhttp.open("GET",totalEmptyIPURL+"?items=" + items);
+  xhttp.open("GET",config.totalEmptyIPURL+"?items=" + items);
   xhttp.send();
   return;
 }
@@ -99,7 +94,7 @@ function getTotalValidIPs(){
       }
   }
 
-  xhttp.open("GET",totalValidIPURL+"?items=" + items);
+  xhttp.open("GET",config.totalValidIPURL+"?items=" + items);
   xhttp.send();
   return;
 }
@@ -118,7 +113,7 @@ function findBadIPs(){
       }
   }
 
-  xhttp.open("GET",badIPURL+"?items=" + items);
+  xhttp.open("GET",config.badIPURL+"?items=" + items);
   xhttp.send();
   return;
 }
@@ -136,7 +131,7 @@ function classifyIPs(){
             displayIPClassifications(ip_classifications);
         }
     }
-    xhttp.open("GET",classifierIPURL+"?items=" + items);
+    xhttp.open("GET",config.classifierIPURL+"?items=" + items);
     xhttp.send();
     return;
 }
@@ -154,7 +149,7 @@ function findCountry(){
             displayIPCountries(ip_countries);
         }
     }
-    xhttp.open("GET",countryIPURL+"?items=" + items);
+    xhttp.open("GET",config.countryIPURL+"?items=" + items);
     xhttp.send();
     return;
 }

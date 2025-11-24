@@ -1,0 +1,9 @@
+image: php:7.2-apache
+stages:
+  - test
+testing:
+  stage: test
+  script:
+    - php -v
+    - php src/test.php
+

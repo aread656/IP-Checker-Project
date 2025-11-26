@@ -43,30 +43,48 @@ function clearText()
     document.getElementById('output-text').value = '';
 }
 
-function getTotalIPs()
-{
+function getTotalIPs(){
+  //read items
   let items = document.getElementById('input-text').value
-
+  //alert if none given
+  if (!items){
+    alert("Please enter some items")
+    return;
+  }
+  // make http req
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
-      if (this.readyState == 4){
-        if(this.status == 200) {
-          //let response = this.response
-          try{
-          var j = JSON.parse(this.response);
-          console.log('test -- ' + j.total_ips);
-          let total_ips = j.total_ips;
-          displayTotalIP(total_ips);
-          }catch (err){
-            alert("Error: JSON backend response could not be parsed")
-            console.error("Backend error " + this.response)
-          }
-      }else{
-        alert("Error: backend service status " + this.status);
-        console.error("Backend error " + this.response)
-      }
+    if (this.readyState != 4){
+      return;
     }
+    if(this.status != 200){
+      alert("Error: backend service status " + this.status);
+      console.error("Backend error " + this.response)
+      return;
+    } 
+    //catch incorrect JSON
+    try{var j = JSON.parse(this.response)}
+    catch (e){
+      alert("Invalid JSON returned by backend: " + e)
+      console.error("Returned invalid JSON: ", this.response);
+      return;
+    };
+    //broader check for json errors, catch-all
+    if (j.error){
+      alert("JSON returned an error" + j.error)
+      console.error("JSON returned error: ",j.error)
+      return;
+    }
+    console.log('test -- ' + j.total_ips);
+    let total_ips = j.total_ips;
+    displayTotalIP(total_ips);
   };
+  //catch-all httpreq error
+  xhttp.onerror=function(){
+    alert("Backend communication error occurred")
+    console.error("Backend comm error");
+    return;
+  }
   xhttp.open("GET",config.totalIPURL+"?items=" + items);
   xhttp.send();
   return;
@@ -75,84 +93,136 @@ function getTotalIPs()
 function getTotalEmptyIPs()
 {
   let items = document.getElementById('input-text').value
-
+  if (!items){
+    alert("Please enter some items")
+    return;
+  }
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
-      if (this.readyState == 4){
-        if (this.status == 200) {
-          //let response = this.response
-          try{
-          var j = JSON.parse(this.response);
-          console.log('test -- ' + j.total_empty_ips);
-          let total_empty_ips = j.total_empty_ips;
-          displayTotalEmpty(total_empty_ips);
-          }catch (err){
-            alert("Error: JSON response could not be parsed")
-            console.error("JSON error " + this.response)
-          }
-      }else{
-        alert("Error: backend service status " + this.status);
-        console.error("Backend error " + this.response)
-      }
+    if (this.readyState != 4){
+      return;
     }
-  };
+    if(this.status != 200){
+    alert("Error: backend service status " + this.status);
+    console.error("Backend error " + this.response)
+    return;
+    } 
+    //catch incorrect JSON
+    try{var j = JSON.parse(this.response)}
+    catch (e){
+      alert("Invalid JSON returned by backend: " + e)
+      console.error("Returned invalid JSON: ", this.response);
+      return;
+    };
+    //broader check for json errors, catch-all
+    if (j.error){
+      alert("JSON returned an error" + j.error)
+      console.error("JSON returned error: ",j.error)
+      return;
+    }
+    console.log('test -- ' + j.total_empty_ips);
+    let total_empty_ips = j.total_empty_ips;
+    displayTotalEmpty(total_empty_ips);
+  }
+  xhttp.onerror=function(){
+    alert("Backend communication error occurred")
+    console.error("Backend comm error");
+    return;
+  }
   xhttp.open("GET",config.totalEmptyIPURL+"?items=" + items);
   xhttp.send();
   return;
 }
+
 function getTotalValidIPs(){
-    let items = document.getElementById('input-text').value
-
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4){
-            if(this.status == 200) {
-            //let response = this.response
-            try{
-            var j = JSON.parse(this.response);
-            console.log('test -- ' + j.totalValid);
-            let total_valid_ips = j.totalValid;
-            displayTotalValid(total_valid_ips);
-            }catch (err){
-            alert("Error: JSON response could not be parsed")
-            console.error("JSON error " + this.response)
-          }
-        }else{
-        alert("Error: backend service status " + this.status);
-        console.error("Backend error " + this.response)
-      }
-    }
+  //read items
+  let items = document.getElementById('input-text').value
+  //alert if none given
+  if (!items){
+    alert("Please enter some items")
+    return;
   }
-
+  // make http req
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState != 4){
+      return;
+    }
+    if(this.status != 200){
+      alert("Error: backend service status " + this.status);
+      console.error("Backend error " + this.response)
+      return;
+    } 
+    //catch incorrect JSON
+    try{var j = JSON.parse(this.response)}
+    catch (e){
+      alert("Invalid JSON returned by backend: " + e)
+      console.error("Returned invalid JSON: ", this.response);
+      return;
+    };
+    //broader check for json errors, catch-all
+    if (j.error){
+      alert("JSON returned an error: " + j.error)
+      console.error("JSON returned error: ",j.error)
+      return;
+    }
+    console.log('test -- ' + j.totalValid);
+    let total_valid_ips = j.totalValid;
+    displayTotalIP(total_valid_ips);
+  };
+  //catch-all httpreq error
+  xhttp.onerror=function(){
+    alert("Backend communication error occurred")
+    console.error("Backend comm error");
+    return;
+  }
   xhttp.open("GET",config.totalValidIPURL+"?items=" + items);
   xhttp.send();
   return;
 }
 
 function findBadIPs(){
-    let items = document.getElementById('input-text').value
-
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4){
-            if(this.status == 200) {
-            //let response = this.response
-            try{
-            var j = JSON.parse(this.response);
-            console.log('test -- ' + j.answer);
-            let good_bad_array = j.answer;
-            displayTotalBadGood(good_bad_array);
-            }catch (err){
-            alert("Error: JSON response could not be parsed")
-            console.error("JSON error " + this.response)
-          }
-        }else{
-        alert("Error: backend service status " + this.status);
-        console.error("Backend error " + this.response)
-      }
-    }
+    //read items
+  let items = document.getElementById('input-text').value
+  //alert if none given
+  if (!items){
+    alert("Please enter some items")
+    return;
   }
-
+  // make http req
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState != 4){
+      return;
+    }
+    if(this.status != 200){
+      alert("Error: backend service status " + this.status);
+      console.error("Backend error " + this.response)
+      return;
+    } 
+    //catch incorrect JSON
+    try{var j = JSON.parse(this.response)}
+    catch (e){
+      alert("Invalid JSON returned by backend: " + e)
+      console.error("Returned invalid JSON: ", this.response);
+      return;
+    };
+    //broader check for json errors, catch-all
+    if (j.error){
+      alert("JSON returned an error: " + j.error)
+      console.error("JSON returned error: ",j.error)
+      return;
+    }
+    console.log('test -- ' + j.total_valid_ips);
+    let good_bad_array = j.answer;
+    displayTotalIP(good_bad_array);
+  };
+  //catch-all httpreq error
+  xhttp.onerror=function(){
+    alert("Backend communication error occurred")
+    console.error("Backend comm error");
+    return;
+  }
   xhttp.open("GET",config.badIPURL+"?items=" + items);
   xhttp.send();
   return;
@@ -160,58 +230,92 @@ function findBadIPs(){
 
 function classifyIPs(){
     let items = document.getElementById('input-text').value
-
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4){
-            if (this.status == 200) {
-            //let response = this.response
-            try{
-            var j = JSON.parse(this.response);
-            console.log('test -- ' + j.answer);
-            let ip_classifications = j.answer;
-            displayIPClassifications(ip_classifications);
-            }catch (err){
-            alert("Error: JSON response could not be parsed")
-            console.error("JSON error " + this.response)
-          }
-        }else{
-        alert("Error: backend service status " + this.status);
-        console.error("Backend error " + this.response)
-      }
+    if (!items){
+      alert("Please enter some items")
+      return;
     }
+  // make http req
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState != 4){
+      return;
     }
-    xhttp.open("GET",config.classifierIPURL+"?items=" + items);
-    xhttp.send();
+    if(this.status != 200){
+      alert("Error: backend service status " + this.status);
+      console.error("Backend error " + this.response)
+      return;
+    } 
+    //catch incorrect JSON
+    try{var j = JSON.parse(this.response)}
+    catch (e){
+      alert("Invalid JSON returned by backend: " + e)
+      console.error("Returned invalid JSON: ", this.response);
+      return;
+    };
+    //broader check for json errors, catch-all
+    if (j.error){
+      alert("JSON returned an error: " + j.error)
+      console.error("JSON returned error: ",j.error)
+      return;
+    }
+    console.log('test -- ' + j.answer);
+    let ip_classifications = j.answer;
+    displayTotalIP(ip_classifications);
+  };
+  //catch-all httpreq error
+  xhttp.onerror=function(){
+    alert("Backend communication error occurred")
+    console.error("Backend comm error");
     return;
+  }
+  xhttp.open("GET",config.classifierIPURL+"?items=" + items);
+  xhttp.send();
+  return;
 }
 
 function findCountry(){
     let items = document.getElementById('input-text').value
-
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4){
-            if (this.status == 200) {
-            //let response = this.response
-            try{
-            var j = JSON.parse(this.response);
-            console.log('test -- ' + j.answer);
-            let ip_countries = j.answer;
-            displayIPCountries(ip_countries);
-            }catch (err){
-            alert("Error: JSON response could not be parsed")
-            console.error("JSON error " + this.response)
-          }
-        }else{
-        alert("Error: backend service status " + this.status);
-        console.error("Backend error " + this.response)
-      }
+    if (!items){
+      alert("Please enter some items")
+      return;
     }
+  // make http req
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState != 4){
+      return;
     }
-    xhttp.open("GET",config.countryIPURL+"?items=" + items);
-    xhttp.send();
-    return;
+    if(this.status != 200){
+      alert("Error: backend service status " + this.status);
+      console.error("Backend error " + this.response)
+      return;
+    } 
+    //catch incorrect JSON
+    try{var j = JSON.parse(this.response)}
+    catch (e){
+      alert("Invalid JSON returned by backend: " + e)
+      console.error("Returned invalid JSON: ", this.response);
+      return;
+    };
+    //broader check for json errors, catch-all
+    if (j.error){
+      alert("JSON returned an error: " + j.error)
+      console.error("JSON returned error: ",j.error)
+      return;
+    }
+    console.log('test -- ' + j.answer);
+    let ip_countries = j.answer;
+    displayTotalIP(ip_countries);
+  };
+  //catch-all httpreq error
+  xhttp.onerror=function(){
+    alert("Backend communication error occurred")
+    console.error("Backend comm error");
+  return;
+  xhttp.open("GET",config.countryIPURL+"?items=" + items);
+  xhttp.send();
+  return;
+}
 }
 
 </script>

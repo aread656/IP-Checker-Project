@@ -8,6 +8,16 @@ using namespace std;
  * into individual items for later processing in the form of a 
  * string vector
  */
+string remove_whitespace(const string &s){
+    string stripped_s;
+    for (char c:s){
+        if (c!=' '){
+            stripped_s += c;
+        }
+    }
+    return stripped_s;
+}
+
 vector<string> parse_items(const string &items){
     vector<string> output;
     string currentString;
@@ -19,13 +29,13 @@ vector<string> parse_items(const string &items){
             currentString+= c;
         }
     }
-    output.push_back(currentString);
+    output.push_back(remove_whitespace(currentString));
     return output;
 }
 
 /**
  * Establishes httpconnection using httplib c++ header file,
- * retrieved from the raw github repository
+ * retrieved from the relevant raw github repository
  * https://raw.githubusercontent.com/yhirose/cpp-httplib/refs/heads/master/httplib.h
  */
 int main(){
@@ -36,17 +46,22 @@ int main(){
         res.set_header("Content-Type","application/json");
         res.set_header("Access-Control-Allow-Origin","*");
         //getting items from http request
-        string items = req.get_param_value("items");
-        if(items.empty()){
+        if(!req.has_param("items")){
             res.set_content("{\"error\":true,\"input\":[],\"answer\":[],\"message\":\"No inputs were given\"}","application/json");
             return;
         }
+        string items = req.get_param_value("items");
         //splitting items into string vector using parse_items
         vector<string> split_items = parse_items(items);
         vector<string> result;
         //returning countryinfo for each
         for (const auto& ip: split_items){
-            result.push_back(countryinfo(ip));
+            try{
+                if (ip.empty()){result.push_back("Empty");}
+                else{result.push_back(countryinfo(ip));}
+            }catch (...){
+                result.push_back("Invalid");
+            }
         }
         //building up outputted JSON
         string JSONOutput = "{\"error\":false,\"answer\":[";

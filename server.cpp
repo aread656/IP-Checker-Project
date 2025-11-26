@@ -23,7 +23,7 @@ vector<string> parse_items(const string &items){
     string currentString;
     for (char c:items){
         if(c == ','){
-            output.push_back(currentString);
+            output.push_back(remove_whitespace(currentString));
             currentString = "";
         }else{
             currentString+= c;

@@ -1,8 +1,8 @@
 {
     "totalIPURL": "http://localhost:70/",
     "totalEmptyIPURL": "http://localhost:90/",
-    "totalValidIPURL": "http://localhost:81",
-    "badIPURL": "http://localhost:82",
-    "classifierIPURL": "http://localhost:83",
-    "countryIPURL" : "http://localhost:84"
+    "totalValidIPURL": "http://localhost:81/",
+    "badIPURL": "http://localhost:82/",
+    "classifierIPURL": "http://localhost:83/",
+    "countryIPURL" : "http://localhost:84/"
 }  

@@ -59,20 +59,17 @@ function getTotalIPs(){
     }
     if(this.status != 200){
       alert("Error: backend service status " + this.status);
-      console.error("Backend error " + this.response)
       return;
     } 
     //catch incorrect JSON
     try{var j = JSON.parse(this.response)}
     catch (e){
       alert("Invalid JSON returned by backend: " + e)
-      console.error("Returned invalid JSON: ", this.response);
       return;
     };
     //broader check for json errors, catch-all
     if (j.error){
       alert("JSON returned an error" + j.error)
-      console.error("JSON returned error: ",j.error)
       return;
     }
     console.log('test -- ' + j.total_ips);
@@ -82,10 +79,9 @@ function getTotalIPs(){
   //catch-all httpreq error
   xhttp.onerror=function(){
     alert("Backend communication error occurred")
-    console.error("Backend comm error");
     return;
   }
-  xhttp.open("GET",config.totalIPURL+"?items=" + items);
+  xhttp.open("GET",config.totalIPURL+"?items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }
@@ -104,20 +100,17 @@ function getTotalEmptyIPs()
     }
     if(this.status != 200){
     alert("Error: backend service status " + this.status);
-    console.error("Backend error " + this.response)
     return;
     } 
     //catch incorrect JSON
     try{var j = JSON.parse(this.response)}
     catch (e){
       alert("Invalid JSON returned by backend: " + e)
-      console.error("Returned invalid JSON: ", this.response);
       return;
     };
     //broader check for json errors, catch-all
     if (j.error){
       alert("JSON returned an error" + j.error)
-      console.error("JSON returned error: ",j.error)
       return;
     }
     console.log('test -- ' + j.total_empty_ips);
@@ -126,14 +119,13 @@ function getTotalEmptyIPs()
   }
   xhttp.onerror=function(){
     alert("Backend communication error occurred")
-    console.error("Backend comm error");
     return;
   }
-  xhttp.open("GET",config.totalEmptyIPURL+"?items=" + items);
+  xhttp.open("GET",config.totalEmptyIPURL+"?items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }
-
+encodeUR
 function getTotalValidIPs(){
   //read items
   let items = document.getElementById('input-text').value
@@ -150,25 +142,22 @@ function getTotalValidIPs(){
     }
     if(this.status != 200){
       alert("Error: backend service status " + this.status);
-      console.error("Backend error " + this.response)
       return;
     } 
     //catch incorrect JSON
     try{var j = JSON.parse(this.response)}
     catch (e){
       alert("Invalid JSON returned by backend: " + e)
-      console.error("Returned invalid JSON: ", this.response);
       return;
     };
     //broader check for json errors, catch-all
     if (j.error){
       alert("JSON returned an error: " + j.error)
-      console.error("JSON returned error: ",j.error)
       return;
     }
     console.log('test -- ' + j.totalValid);
     let total_valid_ips = j.totalValid;
-    displayTotalIP(total_valid_ips);
+    displayTotalValid(total_valid_ips);
   };
   //catch-all httpreq error
   xhttp.onerror=function(){
@@ -176,7 +165,7 @@ function getTotalValidIPs(){
     console.error("Backend comm error");
     return;
   }
-  xhttp.open("GET",config.totalValidIPURL+"?items=" + items);
+  xhttp.open("GET",config.totalValidIPURL+"?items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }
@@ -197,33 +186,29 @@ function findBadIPs(){
     }
     if(this.status != 200){
       alert("Error: backend service status " + this.status);
-      console.error("Backend error " + this.response)
       return;
     } 
     //catch incorrect JSON
     try{var j = JSON.parse(this.response)}
     catch (e){
       alert("Invalid JSON returned by backend: " + e)
-      console.error("Returned invalid JSON: ", this.response);
       return;
     };
     //broader check for json errors, catch-all
     if (j.error){
-      alert("JSON returned an error: " + j.error)
-      console.error("JSON returned error: ",j.error)
+      alert("JSON returned an error: " + j.error + ". Check for non-hex characters")
       return;
     }
     console.log('test -- ' + j.total_valid_ips);
     let good_bad_array = j.answer;
-    displayTotalIP(good_bad_array);
+    displayTotalBadGood(good_bad_array);
   };
   //catch-all httpreq error
   xhttp.onerror=function(){
     alert("Backend communication error occurred")
-    console.error("Backend comm error");
     return;
   }
-  xhttp.open("GET",config.badIPURL+"?items=" + items);
+  xhttp.open("GET",config.badIPURL+"?items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }
@@ -242,33 +227,29 @@ function classifyIPs(){
     }
     if(this.status != 200){
       alert("Error: backend service status " + this.status);
-      console.error("Backend error " + this.response)
       return;
-    } 
+    }
     //catch incorrect JSON
     try{var j = JSON.parse(this.response)}
     catch (e){
       alert("Invalid JSON returned by backend: " + e)
-      console.error("Returned invalid JSON: ", this.response);
       return;
     };
     //broader check for json errors, catch-all
     if (j.error){
-      alert("JSON returned an error: " + j.error)
-      console.error("JSON returned error: ",j.error)
+      alert("JSON returned an error: " + j.error + ". Please enter hex characters only")
       return;
     }
     console.log('test -- ' + j.answer);
     let ip_classifications = j.answer;
-    displayTotalIP(ip_classifications);
+    displayIPClassifications(ip_classifications);
   };
   //catch-all httpreq error
   xhttp.onerror=function(){
     alert("Backend communication error occurred")
-    console.error("Backend comm error");
     return;
   }
-  xhttp.open("GET",config.classifierIPURL+"?items=" + items);
+  xhttp.open("GET",config.classifierIPURL+"?items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }
@@ -287,36 +268,33 @@ function findCountry(){
     }
     if(this.status != 200){
       alert("Error: backend service status " + this.status);
-      console.error("Backend error " + this.response)
       return;
     } 
     //catch incorrect JSON
     try{var j = JSON.parse(this.response)}
     catch (e){
       alert("Invalid JSON returned by backend: " + e)
-      console.error("Returned invalid JSON: ", this.response);
       return;
     };
     //broader check for json errors, catch-all
     if (j.error){
       alert("JSON returned an error: " + j.error)
-      console.error("JSON returned error: ",j.error)
       return;
     }
     console.log('test -- ' + j.answer);
     let ip_countries = j.answer;
-    displayTotalIP(ip_countries);
+    displayIPCountries(ip_countries);
   };
   //catch-all httpreq error
   xhttp.onerror=function(){
     alert("Backend communication error occurred")
-    console.error("Backend comm error");
   return;
-  xhttp.open("GET",config.countryIPURL+"?items=" + items);
+  }
+  xhttp.open("GET",config.countryIPURL+"?items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }
-}
+
 
 </script>
 

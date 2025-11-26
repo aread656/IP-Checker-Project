@@ -28,7 +28,7 @@ public class Server{
         if (items == null || items.isEmpty()){
             JSONResponse = emptyJSONResponse();
         }else{
-            JSONResponse = validJSONResponse(items);
+            JSONResponse = nonEmptyJSONResponse(items);
         }
         try{
             exchange.sendResponseHeaders(200, JSONResponse.length());
@@ -38,6 +38,9 @@ public class Server{
             System.out.println(e);
         }
     }
+    /**
+     * Extract items parameter from the URL
+     */
     public String get_url_parameters(String query,String param){
         if (query == null) {
             return null;
@@ -50,28 +53,66 @@ public class Server{
         }
         return null;
     }
+    /**
+     * JSON response if no items
+    */
     public String emptyJSONResponse(){
         return """
         {"error":true,"input":[],"result":[],"output_message":"no inputs"}
         """;
     }
-    public String validJSONResponse(String rawInput){
-        String[] items = rawInput.split(",");
-        for(int i=0; i<items.length;i++){
-            items[i] = items[i].trim();
-        }
+    /**
+     * Build JSON for when items are present
+     */
+    public String nonEmptyJSONResponse(String rawInput){
+        try{
+            String[] items = rawInput.split(",");
+            for(int i=0; i<items.length;i++){
+                items[i] = items[i].trim();
+            }
 
-        StringBuilder JSONItems = new StringBuilder("[");
-        for(int i = 0;i<items.length;i++){
-            JSONItems.append("\"").append(items[i]).append("\"");
-            if (i < items.length-1){
-                JSONItems.append(",");
-            };
-        }
-        JSONItems.append("]");
+            StringBuilder JSONItems = new StringBuilder("[");
+            for(int i = 0;i<items.length;i++){
+                JSONItems.append("\"").append(items[i]).append("\"");
+                if (i < items.length-1){
+                    JSONItems.append(",");
+                };
+            }
+            JSONItems.append("]");
 
-        String[] classifications = Classifier.classifyIPs(items);
+            String[] classifications = Classifier.classifyIPs(items);
+            for (String classification : classifications) {
+                if (classification.equals("Invalid")||classification.equals("Unknown")){
+                    return buildInvalidJSONResponse(classifications, JSONItems);
+                }
+            }
+            return buildValidJSONReponse(classifications, JSONItems);
+        }catch (Exception e){
+            return "{"+"\"error\":true, "+
+            "\"input\":[], " + "\"answer\":\"invalid characters\""+"}"; 
+        }
+    }
+    /**
+     * Building JSON response if any of the IPs are invalid
+     */
+    public String buildInvalidJSONResponse(String[] classifications,StringBuilder JSONItems){
         StringBuilder JSONAnswer = new StringBuilder("[");
+        for(int i = 0;i < classifications.length; i++){
+            JSONAnswer.append("\"").append(classifications[i]).append("\"");
+            if (i < classifications.length-1){JSONAnswer.append(",");}
+        }
+        JSONAnswer.append("]");
+        
+        String JSONOutput = "{"+"\"error\":true, "+
+            "\"input\":" + JSONItems + 
+            ", " + "\"answer\":\"invalid characters\""+"}"; 
+        return JSONOutput;
+    }
+    /**
+     * Building JSON response if all the IPs are valid
+     */
+    public String buildValidJSONReponse(String[] classifications,StringBuilder JSONItems){
+         StringBuilder JSONAnswer = new StringBuilder("[");
         for(int i = 0;i < classifications.length; i++){
             JSONAnswer.append("\"").append(classifications[i]).append("\"");
             if (i < classifications.length-1){JSONAnswer.append(",");}

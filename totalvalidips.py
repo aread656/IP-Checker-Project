@@ -12,6 +12,10 @@ def totalValidIPs(ips):
     return num_valid
 
 def valid_ipv4(ip):
+    valid_chars = "1234567890."
+    for c in ip:
+        if c not in valid_chars:
+            return False
     ip_parts = ip.split(".")
     if len(ip_parts) != 4:
         return False
@@ -21,8 +25,12 @@ def valid_ipv4(ip):
     return True
 
 def valid_ipv6(ip):
-    if ip.count("::") >= 2:
+    if ip.count("::") >1:
         return False
+    valid_chars = "1234567890abcdefABCDEF:"
+    for c in ip:
+        if c not in valid_chars:
+            return False
     
     if "::" in ip:
         LHS, RHS = ip.split("::")

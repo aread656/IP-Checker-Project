@@ -24,6 +24,7 @@ public class Server{
         headers.add("Access-Control-Allow-Origin", "*");
         String query = exchange.getRequestURI().getQuery();
         String items = get_url_parameters(query, "items");
+        items = items.trim();
         if (items == null || items.isEmpty()){
             JSONResponse = emptyJSONResponse();
         }else{

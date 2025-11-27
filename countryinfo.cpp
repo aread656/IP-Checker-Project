@@ -11,6 +11,10 @@ string countryinfo(const string& ip){
         {100,"US"},{101,"UK"},{102,"China"}
     };
 
+    if (ip.empty()) {
+        return "Unknown";
+    }
+
     //handle ipv6 addresses
     if (ip.find(':') != string::npos){
         for (char c :ip){

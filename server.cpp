@@ -54,17 +54,27 @@ int main(){
         //splitting items into string vector using parse_items
         vector<string> split_items = parse_items(items);
         vector<string> result;
+        bool invalid = false;
         //returning countryinfo for each
         for (const auto& ip: split_items){
             try{
-                if (ip.empty()){result.push_back("Empty");}
-                else{result.push_back(countryinfo(ip));}
+                if (ip.empty()){
+                    result.push_back("Empty");
+                }else{
+                    string c_info = countryinfo(ip);
+                    if (c_info == "Invalid"){
+                        result.push_back("Invalid IPV4 or IPV6 format");
+                        invalid = true;
+                    }else{
+                        result.push_back(c_info);
+                    }
+                }
             }catch (...){
-                result.push_back("Invalid");
+                result.push_back("Invalid IPV4 or IPV6 format");
             }
         }
         //building up outputted JSON
-        string JSONOutput = "{\"error\":false,\"answer\":[";
+        string JSONOutput = "{\"error\":" + string(invalid ? "true" : "false") + ",\"answer\":[";
         for (int i = 0; i < result.size(); i++){
             if (i != 0){
                 JSONOutput += ",";

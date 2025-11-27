@@ -4,7 +4,7 @@
 #include "countryinfo.h"
 using namespace std;
 
-string remove_whitespace(const string &s){
+string remove_ip_whitespace(const string &s){
     string stripped_s;
     for (char c:s){
         if (c!=' '){
@@ -21,7 +21,7 @@ string countryinfo(const string& orig_ip){
         {100,"US"},{101,"UK"},{102,"China"}
     };
 
-    string ip = remove_whitespace(orig_ip);
+    string ip = remove_ip_whitespace(orig_ip);
 
     if (ip.empty()) {
         return "Unknown";

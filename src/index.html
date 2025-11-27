@@ -69,7 +69,7 @@ function getTotalIPs(){
     };
     //broader check for json errors, catch-all
     if (j.error){
-      alert("JSON returned an error: " + j.error + ". " + j.message)
+      alert("JSON returned an error: " + j.error + ". " + j.answer);
       return;
     }
     console.log('test -- ' + j.total_ips);

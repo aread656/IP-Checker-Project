@@ -69,7 +69,7 @@ function getTotalIPs(){
     };
     //broader check for json errors, catch-all
     if (j.error){
-      alert("JSON returned an error" + j.error)
+      alert("JSON returned an error: " + j.error + ". " + j.message)
       return;
     }
     console.log('test -- ' + j.total_ips);
@@ -110,7 +110,7 @@ function getTotalEmptyIPs()
     };
     //broader check for json errors, catch-all
     if (j.error){
-      alert("JSON returned an error" + j.error)
+      alert("JSON returned an error: " + j.error + ". " + j.message)
       return;
     }
     console.log('test -- ' + j.total_empty_ips);

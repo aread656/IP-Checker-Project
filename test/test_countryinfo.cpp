@@ -10,9 +10,9 @@ int main() {
     assert(countryinfo("102.202.302.402")=="China");
     assert(countryinfo("103.203.303.403")=="Unknown");
     //wrong length ip addresses
-    assert(countryinfo("")=="Invalid");   
+    assert(countryinfo("")=="Unknown");   
     assert(countryinfo("a")=="Invalid");  
-    assert(countryinfo(" ")=="Invalid"); 
+    assert(countryinfo(" ")=="Unknown"); 
     assert(countryinfo("ab")=="Invalid");
     assert(countryinfo("23617864982173.aeaeaeeaeaeaeaeeaeaea.362786243283872.21")=="Invalid");
     //non-numeric

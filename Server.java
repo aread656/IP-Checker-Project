@@ -82,7 +82,7 @@ public class Server{
 
             String[] classifications = Classifier.classifyIPs(items);
             for (String classification : classifications) {
-                if (classification.equals("Invalid")||classification.equals("Unknown")){
+                if (classification.equals("Invalid")){
                     return buildInvalidJSONResponse(classifications, JSONItems);
                 }
             }

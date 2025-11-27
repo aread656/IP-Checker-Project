@@ -4,12 +4,24 @@
 #include "countryinfo.h"
 using namespace std;
 
+string remove_whitespace(const string &s){
+    string stripped_s;
+    for (char c:s){
+        if (c!=' '){
+            stripped_s += c;
+        }
+    }
+    return stripped_s;
+}
+
 //split the input into arrays
-string countryinfo(const string& ip){
+string countryinfo(const string& orig_ip){
     //map of prefixes
     unordered_map<int,string> country_map = {
         {100,"US"},{101,"UK"},{102,"China"}
     };
+
+    string ip = remove_whitespace(orig_ip);
 
     if (ip.empty()) {
         return "Unknown";

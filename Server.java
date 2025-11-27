@@ -76,7 +76,7 @@ public class Server{
                 JSONItems.append("\"").append(items[i]).append("\"");
                 if (i < items.length-1){
                     JSONItems.append(",");
-                };
+                }
             }
             JSONItems.append("]");
 

@@ -1,12 +1,13 @@
 def totalValidIPs(ips):
     num_valid = 0
     for ip in ips:
+        ip.strip()
         if "." in ip:
             if (valid_ipv4(ip)):
                 num_valid += 1
         elif ":" in ip:
            if (valid_ipv6(ip)):
-               num_valid += 1;
+               num_valid += 1
         else:
             continue
     return num_valid
@@ -62,4 +63,3 @@ def valid_ipv6(ip):
 #2001:0db8:85a3:0000:0000:8a2e:0370:7334
 #parts = [2001, 0db8, 85a3, 0000, 0000, 8a2e, 0370, 7334]
 #shortened = 2001:0db8:85a3::8a2e:0370:7334
-

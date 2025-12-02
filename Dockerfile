@@ -1,5 +1,6 @@
 FROM python:3.13-slim
 WORKDIR /src
 COPY . /src
-RUN pip install json http.server urllib requests
+RUN pip install requests
+EXPOSE 85
 CMD ["python","rev_proxy.py"]

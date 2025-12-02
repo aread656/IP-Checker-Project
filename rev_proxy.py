@@ -43,6 +43,8 @@ class ProxyHTTPRequestHandling(BaseHTTPRequestHandler):
             self.send_header("Content-Type", "application/json")
         if "Access-Control-Allow-Origin" not in req.headers:
             self.send_header("Access-Control-Allow-Origin","*")
+        self.end_headers()
         self.wfile.write(req.content)
 
-HTTPServer(("",80),ProxyHTTPRequestHandling).serve_forever
+HTTPServer(("",80),ProxyHTTPRequestHandling).serve_forever()
+print("Proxy running\n")

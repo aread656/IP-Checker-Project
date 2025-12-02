@@ -125,7 +125,7 @@ function getTotalEmptyIPs()
   xhttp.send();
   return;
 }
-encodeUR
+
 function getTotalValidIPs(){
   //read items
   let items = document.getElementById('input-text').value
@@ -278,7 +278,7 @@ function findCountry(){
     };
     //broader check for json errors, catch-all
     if (j.error){
-      alert("JSON returned an error: " + j.error)
+      alert("JSON returned an error: " + j.error + ". Check for non-hex characters")
       return;
     }
     console.log('test -- ' + j.answer);
@@ -293,6 +293,49 @@ function findCountry(){
   xhttp.open("GET",config.countryIPURL+"?items=" + encodeURIComponent(items));
   xhttp.send();
   return;
+}
+function save(){
+  let items = document.getElementById("input-text").value;
+  if (!items){
+    alert("Please enter some items")
+    return;
+  }
+  let xhttp = new XMLHttpRequest()
+  xhttp.onreadystatechange = function(){
+    if (this.readyState != 4){return;}
+    if (this.status != 200){
+      alert("Error: backend service error status: " + this.status)
+      return;
+    }
+    let id = this.responseText;
+    alert("IPs saved. ID: " + id);
+  }
+  xhttp.onerror = function() {
+      alert("Backend communication error occurred");
+  };
+
+  xhttp.open("POST", "http://localhost:86/save");
+  xhttp.send(items);
+  
+}
+function load(){
+  let id = prompt("Enter saved IP set's ID")
+  if (!id){return;};
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function(){
+    if (this.readyState != 4) {return;}
+    if (this.status != 200){
+      alert("Error occured, status: " + this.status);
+      return;
+    }
+    document.getElementById("input-text").value = this.responseText;
+    alert("IPs loaded from ID " + id)
+  }
+  xhttp.onerror = function(){
+    alert("Backend communication error occurred")
+  }
+  xhttp.open("GET","http://localhost:86/load?id="+encodeURIComponent(id))
+  xhttp.send();
 }
 
 
@@ -444,6 +487,12 @@ label {
     </div>
     <div>
         <button class="button-active" onclick="findBadIPs();">Find bad IP addresses</button>
+    </div>
+    <div>
+        <button class="button-active" onclick="save();">Save IP addresses</button>
+    </div>
+    <div>
+        <button class="button-active" onclick="load();">Load IP addresses</button>
     </div>
     <div>
         <button class="button-clear" onclick="clearText();">Clear</button>

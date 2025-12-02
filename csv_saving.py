@@ -22,9 +22,10 @@ class HTTPHandler(BaseHTTPRequestHandler):
             id = str(uuid.uuid4())[:8]
             file_length = int(self.headers.get("Content-Length",0))
             ips = self.rfile.read(file_length).decode().strip()
-            with open(csvfile,"a", newline = '') as f:
+            with open(csvfile,"a", newline = '',buffering = 1) as f:
                 w = csv.writer(f)
                 w.writerow([id,ips])
+                f.flush()
             self.send_response(200)
             self.send_header('Content-Type', 'application/json');
             self.send_header('Access-Control-Allow-Origin', '*')

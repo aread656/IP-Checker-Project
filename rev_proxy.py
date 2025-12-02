@@ -1,0 +1,48 @@
+import json
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib import parse
+import requests
+
+#load config
+with open("config.json") as f:
+    config = json.load(f)["services"]
+class ProxyHTTPRequestHandling(BaseHTTPRequestHandler):
+    def do_GET(self):
+        #parsing heard connections
+        req_query = parse.parse_qs(parse.urlparse(self.path).query);
+        query_service = req_query.get("service",[""])[0];
+        #routing logic
+        match query_service:
+            case "total-ip":
+                route = "http://localhost:70"
+            case "empty-ip":
+                route = "http://localhost:90"
+            case "valid-ip":
+                route = "http://localhost:81"
+            case "bad-ip":
+                route = "http://localhost:82"
+            case "classify-ip":
+                route = "http://localhost:83"
+            case "country-ip":
+                route = "http://localhost:84"
+            case _:
+                self.send_error(404,"Unknown service")
+                return
+
+        # make outgoing connection
+        route_url = route+self.path
+        req = requests.get(route_url)
+        #result returns to user
+        self.send_response(req.status_code)
+        #send headers, include headers if not received
+        #(e.g. python totalvalidips implementation)
+        for h_name,h_value in req.headers.items():
+            if h_name.lower() not in ("transfer-encoding","connection"):
+                self.send_header(h_name,h_value)
+        if "Content-Type" not in req.headers:
+            self.send_header("Content-Type", "application/json")
+        if "Access-Control-Allow-Origin" not in req.headers:
+            self.send_header("Access-Control-Allow-Origin","*")
+        self.wfile.write(req.content)
+
+HTTPServer(("",80),ProxyHTTPRequestHandling).serve_forever

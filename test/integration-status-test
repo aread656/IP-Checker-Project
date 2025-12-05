@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../server");
 const expect = require("chai").expect;
 
-it("General Status Tests", function(done){
+it("General Status URL Test", function(done){
     request(app).post("/check").send({
             ips: ["127.0.0.1", "100.200.300.400", ""]
         })

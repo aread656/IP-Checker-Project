@@ -45,6 +45,5 @@ class ProxyHTTPRequestHandling(BaseHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin","*")
         self.end_headers()
         self.wfile.write(req.content)
-
-HTTPServer(("",80),ProxyHTTPRequestHandling).serve_forever()
 print("Proxy running\n")
+HTTPServer(("",80),ProxyHTTPRequestHandling).serve_forever()

@@ -105,7 +105,7 @@ public class Server{
         
         String JSONOutput = "{"+"\"error\":true, "+
             "\"input\":" + JSONItems + 
-            ", " + "\"answer\":\"invalid characters\""+"}"; 
+            ", " + "\"answer\":\"invalid characters present- \""+ JSONAnswer + " }"; 
         return JSONOutput;
     }
     /**

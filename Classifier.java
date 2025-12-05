@@ -12,6 +12,9 @@ public class Classifier{
         for(int i = 0; i<results.length;i++){
             boolean invalid = false;
             String address = addresses[i];
+            if (address != null){
+                address = address.trim();
+            }
             if(address == null||address.isEmpty()){
                 results[i] = "Unknown";
                 continue;

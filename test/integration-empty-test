@@ -1,0 +1,9 @@
+it("Empty items route", function(done) {
+        request(app).get("/").end(function(err,res){
+            if (err)
+                return done(err)
+            expect(res.body.error).to.equal(true);
+            done()
+        })
+        
+    });

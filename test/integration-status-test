@@ -2,13 +2,15 @@ const request = require("supertest");
 const app = require("../server");
 const expect = require("chai").expect;
 
-it("correctly returns good/bad/empty statuses", async () => {
-    const res = await request(app)
-        .post("/check")
-        .send({
+it("General Status Tests", function(done){
+    request(app).post("/check").send({
             ips: ["127.0.0.1", "100.200.300.400", ""]
         })
-        .expect(200);
-
-    expect(res.body.result).to.deep.equal(["good","bad","empty"]);
+        .expect(200).end(function(err,res){
+            if (err)
+                return done(err)
+            expect(res.body.result).to.deep.equal(["good","bad","empty"]);
+            done()
+        })
+    
 });

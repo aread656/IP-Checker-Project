@@ -1,10 +1,10 @@
 {
     "services": {
-    "totalIPURL": "http://localhost:70/",
-    "totalEmptyIPURL": "http://localhost:90/",
-    "totalValidIPURL": "http://localhost:81/",
-    "badIPURL": "http://localhost:82/",
-    "classifierIPURL": "http://localhost:83/",
-    "countryIPURL" : "http://localhost:84/"
+    "total-ip": "http://localhost:70/",
+    "empty-ip": "http://localhost:90/",
+    "valid-ip": "http://localhost:81/",
+    "bad-ip": "http://localhost:82/",
+    "classify-ip": "http://localhost:83/",
+    "country-ip" : "http://localhost:84/"
     }
 }  

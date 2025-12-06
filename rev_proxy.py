@@ -1,18 +1,25 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from urllib import parse
+from urllib.parse import parse_qs, urlparse
 import requests
 
 #load config
 with open("config.json") as f:
     config = json.load(f)["services"]
+host = "0.0.0.0"
+port = 8080
 class ProxyHTTPRequestHandling(BaseHTTPRequestHandler):
     def do_GET(self):
         #parsing heard connections
-        req_query = parse.parse_qs(parse.urlparse(self.path).query);
+        req_query = parse_qs(urlparse(self.path).query);
         query_service = req_query.get("service",[""])[0];
         #routing logic
-        match query_service:
+        route = config.get(query_service)
+        if not route:
+            self.send_error(404,"No service was found")
+            return
+        #old logic backup
+        """match query_service:
             case "total-ip":
                 route = "http://localhost:70"
             case "empty-ip":
@@ -26,12 +33,23 @@ class ProxyHTTPRequestHandling(BaseHTTPRequestHandler):
             case "country-ip":
                 route = "http://localhost:84"
             case _:
-                self.send_error(404,"Unknown service")
-                return
+                self.send_error(404,"IP address checker cannot be run on this address")
+                return"""
 
         # make outgoing connection
         route_url = route+self.path
-        req = requests.get(route_url)
+        #timeout handling
+        try:
+            req = requests.get(route_url, timeout = 8)
+        except requests.exceptions.ConnectTimeout as ct:
+            self.send_error(408, f"Connection timeout: {ct}")
+            return
+        except requests.exceptions.Timeout as t:
+            self.send_error(408, f"Timeout exception {t}")
+            return
+        except requests.exceptions.RequestException as e:
+            self.send_error(404, f"Exception: {e}")
+            return
         #result returns to user
         self.send_response(req.status_code)
         #send headers, include headers if not received
@@ -45,5 +63,5 @@ class ProxyHTTPRequestHandling(BaseHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin","*")
         self.end_headers()
         self.wfile.write(req.content)
-print("Proxy running\n")
-HTTPServer(("",80),ProxyHTTPRequestHandling).serve_forever()
+print(f"Proxy running on port 8080\n")
+HTTPServer((host,port),ProxyHTTPRequestHandling).serve_forever()

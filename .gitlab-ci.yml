@@ -13,5 +13,6 @@ build:
 test:
   stage: test
   script: 
+    - pip install requests
     - python test/test_validips.py
     - python test/test_integration.py

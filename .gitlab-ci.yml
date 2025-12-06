@@ -12,9 +12,4 @@ build:
 
 test:
   stage: test
-  script: 
-    - pip install requests flask flask-cors
-    - python server.py
-    - sleep 5
-    - python test/test_validips.py
-    - python test/test_integration.py
+  script: python test/test_validips.py

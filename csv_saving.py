@@ -11,13 +11,6 @@ if not os.path.exists(csvfile):
 
 class HTTPHandler(BaseHTTPRequestHandler):
     def do_POST(self):
-        #if path is save
-        #create id
-        #get length from header
-        #ips from rfile read decode strip
-        #open with append and write
-        #ssend repone and headers
-        #else errors
         if self.path == "/save":
             id = str(uuid.uuid4())[:8]
             file_length = int(self.headers.get("Content-Length",0))
@@ -35,11 +28,6 @@ class HTTPHandler(BaseHTTPRequestHandler):
             self.send_error(404)
             self.log_error("Error occurred")
     def do_GET(self):
-        #if path load
-        #retrieve id
-        #open file under read
-        #check each row, write out headers&id
-        #errors
         if self.path.startswith("/load"):
             try:
                 id = self.path.split("id=")[1]

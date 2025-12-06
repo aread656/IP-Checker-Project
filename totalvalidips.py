@@ -59,7 +59,3 @@ def valid_ipv6(ip):
             if char.lower() not in "0123456789abcdef":
                 return False
     return True
-
-#2001:0db8:85a3:0000:0000:8a2e:0370:7334
-#parts = [2001, 0db8, 85a3, 0000, 0000, 8a2e, 0370, 7334]
-#shortened = 2001:0db8:85a3::8a2e:0370:7334

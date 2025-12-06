@@ -12,4 +12,6 @@ build:
 
 test:
   stage: test
-  script: python test/test_validips.py
+  script: 
+    - python test/test_validips.py
+    - python test/test_integration.py

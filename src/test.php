@@ -17,5 +17,6 @@ test(getTotalEmptyIPs(""),1);
 test(getTotalEmptyIPs("1:2:3:4:,,"),2);
 test(getTotalEmptyIPs(",a.b.c.d"),1);
 test(getTotalEmptyIPs("127.0.,,0.1"),1);
+test(getTotalEmptyIPs("        ,100.200.300.400,   "),2);
 
 exit($fail);

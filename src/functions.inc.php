@@ -4,7 +4,7 @@ function getTotalEmptyIPs($items)
   $ips = explode(",", $items);
   $total_empty_ips = 0;
   for ($i = 0; $i < count($ips); $i++) {
-    if ($ips[$i] == ""){
+    if (trim($ips[$i]) === ""){
         $total_empty_ips += 1;
       }
   }

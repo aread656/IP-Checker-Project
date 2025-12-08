@@ -23,12 +23,14 @@ foreach($ips as $ip){
 		continue;
 	}
 	if (strpos($ip,".")!==false){
-		if(strspn($ip,$valid_ipv4_chars)!==strlen($ip)){
+		if(strspn($ip,$valid_ipv4_chars)
+			!==strlen($ip)){
 			$invalid = true;
 			break;
 		}
 	}elseif(strpos($ip,":")!==false){
-		if(strspn($ip,$valid_ipv6_chars)!==strlen($ip)){
+		if(strspn($ip,$valid_ipv6_chars)
+			!==strlen($ip)){
 			$invalid = true;
 			break;
 		}

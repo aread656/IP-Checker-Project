@@ -291,7 +291,7 @@ function findCountry(){
     alert("Backend communication error occurred")
   return;
   }
-  xhttp.open("GET",config.countryIPURL+"items=" + encodeURIComponent(items));
+  xhttp.open("GET",config.countryIPURL+"&items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }

@@ -308,14 +308,14 @@ function save(){
       alert("Error: backend service error status: " + this.status)
       return;
     }
-    let id = this.responseText;
-    alert("IPs saved. ID: " + id);
+    let j = JSON.parse(this.responseText);
+    alert("IPs saved. ID: " + j.id);
   }
   xhttp.onerror = function() {
       alert("Backend communication error occurred");
-  };
+  };config.saveURL
 
-  xhttp.open("POST", "http://localhost:86/save");
+  xhttp.open("POST", config.saveURL);
   xhttp.send(items);
   
 }
@@ -329,13 +329,14 @@ function load(){
       alert("Error occured, status: " + this.status);
       return;
     }
-    document.getElementById("input-text").value = this.responseText;
+    let j = JSON.parse(this.responseText)
+    document.getElementById("input-text").value = j.ips;
     alert("IPs loaded from ID " + id)
   }
   xhttp.onerror = function(){
     alert("Backend communication error occurred")
   }
-  xhttp.open("GET","http://localhost:86/load?id="+encodeURIComponent(id))
+  xhttp.open("GET",config.loadURL+encodeURIComponent(id))
   xhttp.send();
 }
 

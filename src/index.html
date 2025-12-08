@@ -81,7 +81,7 @@ function getTotalIPs(){
     alert("Backend communication error occurred")
     return;
   }
-  xhttp.open("GET",config.totalIPURL+"?items=" + encodeURIComponent(items));
+  xhttp.open("GET",config.totalIPURL+"&items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }
@@ -121,7 +121,7 @@ function getTotalEmptyIPs()
     alert("Backend communication error occurred")
     return;
   }
-  xhttp.open("GET",config.totalEmptyIPURL+"?items=" + encodeURIComponent(items));
+  xhttp.open("GET",config.totalEmptyIPURL+"&items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }
@@ -165,7 +165,7 @@ function getTotalValidIPs(){
     console.error("Backend comm error");
     return;
   }
-  xhttp.open("GET",config.totalValidIPURL+"?items=" + encodeURIComponent(items));
+  xhttp.open("GET",config.totalValidIPURL+"&items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }
@@ -196,7 +196,8 @@ function findBadIPs(){
     };
     //broader check for json errors, catch-all
     if (j.error){
-      alert("JSON returned an error: " + j.error + ". Check for non-hex characters")
+      alert("JSON returned an error: " + j.error + 
+      ". Check for non-hex characters")
       return;
     }
     console.log('test -- ' + j.total_valid_ips);
@@ -208,7 +209,7 @@ function findBadIPs(){
     alert("Backend communication error occurred")
     return;
   }
-  xhttp.open("GET",config.badIPURL+"?items=" + encodeURIComponent(items));
+  xhttp.open("GET",config.badIPURL+"&items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }
@@ -249,7 +250,7 @@ function classifyIPs(){
     alert("Backend communication error occurred")
     return;
   }
-  xhttp.open("GET",config.classifierIPURL+"?items=" + encodeURIComponent(items));
+  xhttp.open("GET",config.classifierIPURL+"&items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }
@@ -290,7 +291,7 @@ function findCountry(){
     alert("Backend communication error occurred")
   return;
   }
-  xhttp.open("GET",config.countryIPURL+"?items=" + encodeURIComponent(items));
+  xhttp.open("GET",config.countryIPURL+"items=" + encodeURIComponent(items));
   xhttp.send();
   return;
 }

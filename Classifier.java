@@ -43,7 +43,8 @@ public class Classifier{
         return results;
     }
     public static void main(String[] args){
-        String[] ips = new String[]{"127.0.0.1","1.1.1.1","12:21::21:1a","aa:bb::cc:dd:ee"};
+        String[] ips = new String[]{"127.0.0.1","1.1.1.1",
+        "12:21::21:1a","aa:bb::cc:dd:ee"};
         System.out.println(Arrays.toString(classifyIPs(ips)));
     }
 }

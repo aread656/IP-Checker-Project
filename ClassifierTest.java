@@ -56,7 +56,8 @@ public class ClassifierTest{
         return test(input, result);
     }
     public static boolean miscTest(){
-        String[] input = {"127.0.0.1","100.200.300.400","1a:2a::8a","a_very_invalid_address][][][][][][][][}{}{}{}{()()()()()}]",""," "};
+        String[] input = {"127.0.0.1","100.200.300.400","1a:2a::8a",
+        "a_very_invalid_address][][][][][][][][}{}{}{}{()()()()()}]",""," "};
         String[] result = {"IPV4","IPV4","IPV6","Invalid","Unknown","Unknown"};
         return test(input, result);
     }

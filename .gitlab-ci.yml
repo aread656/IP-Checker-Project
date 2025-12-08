@@ -1,9 +1,7 @@
 image: gcc:14.2
-
 stages:
   - build
   - test
-
 build:
   stage: build
   script:

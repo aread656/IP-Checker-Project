@@ -30,7 +30,8 @@ string countryinfo(const string& orig_ip){
     //handle ipv6 addresses
     if (ip.find(':') != string::npos){
         for (char c :ip){
-            //if not a colon and not a digit, return invalid if not a valid hex letter
+            //if not a colon and not a digit, return
+            // invalid if not a valid hex letter
             if (!isdigit(c) && c != ':' && (c<'A'||c>'F')&&(c<'a'||c>'f')){
                 return "Invalid";
             }

@@ -32,17 +32,7 @@ class HTTPHandler(BaseHTTPRequestHandler):
         else:
             self.send_error(404,"Path not found")
     def do_GET(self):
-        if self.path == "/display":
-            with open(csvfile,"r",newline='') as f:
-                r = csv.DictReader(f)
-                items = list(r)
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json');
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.end_headers()
-            self.wfile.write(json.dumps(items).encode())
-            return
-        elif self.path.startswith("/load"):
+        if self.path.startswith("/load"):
             try:
                 id = self.path.split("id=")[1]
             except:

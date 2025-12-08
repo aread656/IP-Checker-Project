@@ -1,12 +1,8 @@
 'use strict';
-
 const express = require('express');
-
 const PORT = 82;
 const HOST = '0.0.0.0';
-
 var badips = require('./badips');
-
 const app = express();
 app.get('/', (req,res) => {
     const validIPChars = "0123456789abcdef.:, "

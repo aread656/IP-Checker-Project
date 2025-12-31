@@ -1,0 +1,17 @@
+image: eclipse-temurin:21-jdk
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - mkdir -p build
+    - javac -d build *.java
+  artifacts:
+    paths:
+      - build/
+test:
+  stage: test
+  script:
+    - java -cp build ClassifierTest

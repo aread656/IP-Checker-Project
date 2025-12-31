@@ -1,0 +1,10 @@
+{
+    "services": {
+    "total-ip": "http://localhost:70/",
+    "empty-ip": "http://localhost:90/",
+    "valid-ip": "http://localhost:81/",
+    "bad-ip": "http://localhost:82/",
+    "classify-ip": "http://localhost:83/",
+    "country-ip" : "http://localhost:84/"
+    }
+}  

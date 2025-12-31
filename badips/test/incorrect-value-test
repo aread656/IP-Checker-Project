@@ -1,0 +1,14 @@
+var expect = require('chai').expect;
+var badipcount = require('../badips');
+it('Test including incorrect address', function(done){
+        var t = [
+            "127.0.0.1",
+            "100.200.300.400",
+            "",
+            "not_an_ip",
+            "103.203.303.403"
+        ];
+        var a = ["good","bad","empty","good","bad"];
+        expect(badipcount.badIPs(t)).to.deep.equal(a);
+        done();
+    });

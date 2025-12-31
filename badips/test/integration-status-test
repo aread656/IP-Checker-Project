@@ -1,0 +1,16 @@
+const request = require("supertest");
+const app = require("../server");
+const expect = require("chai").expect;
+
+it("General Status URL Test", function(done){
+    request(app).post("/check").send({
+            ips: ["127.0.0.1", "100.200.300.400", ""]
+        })
+        .expect(200).end(function(err,res){
+            if (err)
+                return done(err)
+            expect(res.body.result).to.deep.equal(["good","bad","empty"]);
+            done()
+        })
+    
+});

@@ -1,0 +1,13 @@
+const request = require("supertest");
+const app = require("../server");
+const expect = require("chai").expect;
+
+it("Empty items URL", function(done) {
+        request(app).get("/").end(function(err,res){
+            if (err)
+                return done(err)
+            expect(res.body.error).to.equal(true);
+            done()
+        })
+        
+});

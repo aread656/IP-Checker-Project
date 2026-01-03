@@ -1,57 +1,43 @@
-version: '3.9'
-
 services:
   proxy:
-    build:
-      context: ./proxy
+    build: ./proxy
     ports:
       - "8080:8080"
     depends_on:
-      - ipchecker-totalips
-      - ipchecker-totalemptyips
-      - totalvalidips
+      - totalips
+      - emptyips
+      - validips
       - badips
-      - ipclassifier
+      - classifier
       - countryinfo
-
-  ipchecker-totalips:
-    build:
-      context: ./totalips
+      - save
+      
+  frontend:
+    build: ./frontend
     ports:
-      - "70:70"
+      - "80:80"
+    depends_on:
+      - proxy
+    networks:
+      - default
 
-  ipchecker-totalemptyips:
-    build:
-      context: ./emptyips
-    ports:
-      - "90:90"
+  totalips:
+    build: ./totalips
 
-  totalvalidips:
-    build:
-      context: ./validips
-    ports:
-      - "81:81"
+  emptyips:
+    build: ./emptyips
+
+  validips:
+    build: ./validips
 
   badips:
-    build:
-      context: ./badips
-    ports:
-      - "82:82"
+    build: ./badips
 
-  ipclassifier:
-    build:
-      context: ./classifier
-    ports:
-      - "83:83"
+  classifier:
+    build: ./classifier
 
   countryinfo:
-    build:
-      context: ./countryinfo
-    ports:
-      - "84:84"
+    build: ./countryinfo
 
   save:
-    build:
-      context: ./save
-    ports:
-      - "86:86"
+    build: ./save

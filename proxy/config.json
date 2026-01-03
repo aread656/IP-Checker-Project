@@ -1,10 +1,12 @@
 {
   "services": {
-    "total-ip": "http://ipchecker-totalips:70",
-    "empty-ip": "http://ipchecker-totalemptyips:90",
-    "valid-ip": "http://totalvalidips:81",
+    "total-ip": "http://totalips:70",
+    "empty-ip": "http://emptyips:90",
+    "valid-ip": "http://validips:81",
     "bad-ip": "http://badips:82",
-    "classify-ip": "http://ipclassifier:83",
-    "country-ip": "http://countryinfo:84"
+    "classify-ip": "http://classifier:83",
+    "country-ip": "http://countryinfo:84",
+    "save": "http://save:86",
+    "load": "http://save:86"
   }
 }

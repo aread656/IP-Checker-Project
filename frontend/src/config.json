@@ -5,6 +5,7 @@
     "badIPURL": "http://localhost:8080/?service=bad-ip",
     "classifierIPURL": "http://localhost:8080/?service=classify-ip",
     "countryIPURL" : "http://localhost:8080/?service=country-ip",
-    "saveURL":"http://localhost:86/save",
-    "loadURL":"http://localhost:86/load?id="
+    "saveURL": "http://localhost:8080/?service=save",
+    "loadURL": "http://localhost:8080/?service=load&id="
+
 }  

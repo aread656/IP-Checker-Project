@@ -313,7 +313,7 @@ function save(){
   }
   xhttp.onerror = function() {
       alert("Backend communication error occurred");
-  };config.saveURL
+  };
 
   xhttp.open("POST", config.saveURL);
   xhttp.send(items);

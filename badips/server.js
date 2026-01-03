@@ -7,7 +7,6 @@ const app = express();
 app.get('/', (req,res) => {
     const validIPChars = "0123456789abcdef.:, "
     res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Access-Control-Allow-Origin', '*')
     var text = req.query.items.trim();
     if (!text){
         res.end(JSON.stringify({

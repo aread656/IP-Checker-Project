@@ -44,7 +44,6 @@ int main(){
     httplib::Server server;
     server.Get("/", [](const httplib::Request &req, httplib::Response &res) {
         res.set_header("Content-Type","application/json");
-        res.set_header("Access-Control-Allow-Origin","*");
         //getting items from http request
         if(!req.has_param("items")){
             res.set_content("{\"error\":true,\"input\":[],\"answer\":[],\"message\":\"No inputs were given\"}","application/json");

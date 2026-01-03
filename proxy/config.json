@@ -1,10 +1,10 @@
 {
-    "services": {
-    "total-ip": "http://localhost:70/",
-    "empty-ip": "http://localhost:90/",
-    "valid-ip": "http://localhost:81/",
-    "bad-ip": "http://localhost:82/",
-    "classify-ip": "http://localhost:83/",
-    "country-ip" : "http://localhost:84/"
-    }
-}  
+  "services": {
+    "total-ip": "http://ipchecker-totalips:70",
+    "empty-ip": "http://ipchecker-totalemptyips:90",
+    "valid-ip": "http://totalvalidips:81",
+    "bad-ip": "http://badips:82",
+    "classify-ip": "http://ipclassifier:83",
+    "country-ip": "http://countryinfo:84"
+  }
+}

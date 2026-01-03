@@ -1,0 +1,57 @@
+version: '3.9'
+
+services:
+  proxy:
+    build:
+      context: ./proxy
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ipchecker-totalips
+      - ipchecker-totalemptyips
+      - totalvalidips
+      - badips
+      - ipclassifier
+      - countryinfo
+
+  ipchecker-totalips:
+    build:
+      context: ./totalips
+    ports:
+      - "70:70"
+
+  ipchecker-totalemptyips:
+    build:
+      context: ./emptyips
+    ports:
+      - "90:90"
+
+  totalvalidips:
+    build:
+      context: ./validips
+    ports:
+      - "81:81"
+
+  badips:
+    build:
+      context: ./badips
+    ports:
+      - "82:82"
+
+  ipclassifier:
+    build:
+      context: ./classifier
+    ports:
+      - "83:83"
+
+  countryinfo:
+    build:
+      context: ./countryinfo
+    ports:
+      - "84:84"
+
+  save:
+    build:
+      context: ./save
+    ports:
+      - "86:86"

@@ -6,6 +6,5 @@
     "classifierIPURL": "http://localhost:8080/?service=classify-ip",
     "countryIPURL" : "http://localhost:8080/?service=country-ip",
     "saveURL": "http://localhost:8080/?service=save",
-    "loadURL": "http://localhost:8080/?service=load&id="
-
+    "loadURL": "http://localhost:8080/?service=load"
 }  

@@ -75,13 +75,6 @@ class ProxyHTTPRequestHandling(BaseHTTPRequestHandler):
         self.wfile.write(req.content)
 
     def do_POST(self):
-        #get query
-        #get "service" from url
-        #make route
-        #handle no route
-        #content_length
-        #body = self.rfile.read(length)
-        #do responses
         req_query = parse_qs(urlparse(self.path).query)
         query_service = req_query.get("service",[""])[0]
         route = config.get(query_service)

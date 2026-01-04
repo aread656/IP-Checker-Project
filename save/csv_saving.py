@@ -3,6 +3,7 @@ import os
 from http.server import BaseHTTPRequestHandler,HTTPServer
 import uuid
 import json
+from urllib.parse import urlparse, parse_qs
 
 csvfile = "saved_addresses.csv"
 if not os.path.exists(csvfile):
@@ -12,7 +13,9 @@ if not os.path.exists(csvfile):
 
 class HTTPHandler(BaseHTTPRequestHandler):
     def do_POST(self):
-        if self.path == "/save":
+        query = parse_qs(urlparse(self.path).query)
+        service = query.get("service",[""])[0]
+        if service == "save":
             id = str(uuid.uuid4())[:8]
             file_length = int(self.headers.get("Content-Length",0))
             ips = self.rfile.read(file_length).decode().strip()
@@ -32,9 +35,11 @@ class HTTPHandler(BaseHTTPRequestHandler):
         else:
             self.send_error(404,"Path not found")
     def do_GET(self):
-        if self.path.startswith("/load"):
+        query = parse_qs(urlparse(self.path).query)
+        service = query.get("service",[""])[0]
+        if service == "load":
             try:
-                id = self.path.split("id=")[1]
+                id = query.get("id",[""])[0]
             except:
                 self.send_error(404,"ID not found")
                 return

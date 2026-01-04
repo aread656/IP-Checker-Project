@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch("config.json")
       .then(response => response.json())
       .then(json => {
+        console.log("Loaded config:", config);
+        console.log("saveURL =", config.saveURL);
+        console.log("loadURL =", config.loadURL);
         config = json; loadedConfig = true;
         document.querySelectorAll(".button-active").forEach(btn=>btn.disabled = false);
       })
@@ -363,6 +366,6 @@ function load(){
   xhttp.onerror = function(){
     alert("Backend communication error occurred")
   }
-  xhttp.open("GET",config.loadURL+ "?id=" + encodeURIComponent(id))
+  xhttp.open("GET",config.loadURL + "&id=" + encodeURIComponent(id))
   xhttp.send();
 }

@@ -1,0 +1,105 @@
+body  {
+    font-size: 150%;
+    font-family: monospace;
+}
+label {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+}
+#logo
+{
+    font-family: Calibri, sans-serif;
+    font-weight: lighter;
+    font-size: 30px;
+    color: #505050;
+    margin: 0.5em;
+}
+#normal-text
+{
+    font-family: Calibri, sans-serif;
+    font-size: 20px;
+    margin: 0.5em;
+}
+#ipcheck
+{
+    text-align: center;
+    margin-top: 1em;
+}
+#input-div
+{
+    text-align: center;
+    margin-top: 1em;
+    background-color:#d5d8dc  ;
+}
+#output-div
+{
+    text-align: center;
+    background-color:#808b96 ;
+}
+
+.input-items {
+      font-size: 90%;
+      color: black;
+      background-color:white ;
+      padding: 0.2em;
+      margin: 0.2em;
+      font-family: monospace;
+      letter-spacing: 0.1em;
+      width: 600px;
+
+  }
+
+.display-output {
+    font-size: 90%;
+    color: black;
+    background-color:white ;
+    padding: 0.2em;
+    margin: 0.2em;
+    font-family: monospace;
+    letter-spacing: 0.1em;
+    width: 600px;
+
+}
+
+.button-active {
+    background-color:   #2874a6  ;
+    color: white;
+    padding: 0px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    height: 50px;
+    width: 400px;
+}
+
+.button-inactive {
+    background-color: gray;
+    color: white;
+    padding: 0px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    height: 50px;
+    width: 400px;
+}
+
+.button-clear {
+    background-color:  #c0392b ;
+    color: white;
+    padding: 0px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    height: 40px;
+    width: 400px;
+}

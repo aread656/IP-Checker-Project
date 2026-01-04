@@ -90,11 +90,11 @@ class ProxyHTTPRequestHandling(BaseHTTPRequestHandler):
             self.send_cors_headers()
             self.end_headers()
             return
-        length = int(self.headers.get("Content-;ength",0))
+        length = int(self.headers.get("Content-Length",0))
         data = self.rfile.read(length)
 
         try:
-            req = requests.post(route,timeout=8)
+            req = requests.post(route,timeout=8,data=data)
         except requests.exceptions.ConnectTimeout as ct:
             self.send_response(408)
             self.send_cors_headers()

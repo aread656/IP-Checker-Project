@@ -6,9 +6,10 @@
 <script type="text/javascript">
 
 let config = {};
+let loadedConfig = false;
 fetch("config.json")
     .then(response => response.json())
-    .then(json => {config = json;})
+    .then(json => {config = json; loadedConfig = true})
 
 function displayTotalIP(total_ips)
 {
@@ -44,6 +45,9 @@ function clearText()
 }
 
 function getTotalIPs(){
+  if (!loadedConfig){
+    alert("config.json not yet loaded");return;
+  }
   //read items
   let items = document.getElementById('input-text').value
   //alert if none given
@@ -86,8 +90,10 @@ function getTotalIPs(){
   return;
 }
 
-function getTotalEmptyIPs()
-{
+function getTotalEmptyIPs(){
+  if (!loadedConfig){
+    alert("config.json not yet loaded");return;
+  }
   let items = document.getElementById('input-text').value
   if (!items){
     alert("Please enter some items")
@@ -127,6 +133,9 @@ function getTotalEmptyIPs()
 }
 
 function getTotalValidIPs(){
+  if (!loadedConfig){
+    alert("config.json not yet loaded");return;
+  }
   //read items
   let items = document.getElementById('input-text').value
   //alert if none given
@@ -171,6 +180,9 @@ function getTotalValidIPs(){
 }
 
 function findBadIPs(){
+  if (!loadedConfig){
+    alert("config.json not yet loaded");return;
+  }
     //read items
   let items = document.getElementById('input-text').value
   //alert if none given
@@ -215,6 +227,9 @@ function findBadIPs(){
 }
 
 function classifyIPs(){
+  if (!loadedConfig){
+    alert("config.json not yet loaded");return;
+  }
     let items = document.getElementById('input-text').value
     if (!items){
       alert("Please enter some items")
@@ -256,11 +271,14 @@ function classifyIPs(){
 }
 
 function findCountry(){
-    let items = document.getElementById('input-text').value
-    if (!items){
-      alert("Please enter some items")
-      return;
-    }
+  if (!loadedConfig){
+    alert("config.json not yet loaded");return;
+  }
+  let items = document.getElementById('input-text').value
+  if (!items){
+    alert("Please enter some items")
+    return;
+  }
   // make http req
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -296,6 +314,9 @@ function findCountry(){
   return;
 }
 function save(){
+  if (!loadedConfig){
+    alert("config.json not yet loaded");return;
+  }
   let items = document.getElementById("input-text").value;
   if (!items){
     alert("Please enter some items")
@@ -320,6 +341,9 @@ function save(){
   
 }
 function load(){
+  if (!loadedConfig){
+    alert("config.json not yet loaded");return;
+  }
   let id = prompt("Enter saved IP set's ID")
   if (!id){return;};
   let xhttp = new XMLHttpRequest();

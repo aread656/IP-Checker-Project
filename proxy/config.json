@@ -1,12 +1,12 @@
 {
   "services": {
-    "total-ip": "http://totalips:70",
-    "empty-ip": "http://emptyips:90",
-    "valid-ip": "http://validips:81",
-    "bad-ip": "http://badips:82",
-    "classify-ip": "http://classifier:83",
-    "country-ip": "http://countryinfo:84",
-    "save": "http://save:86",
-    "load": "http://save:86"
+    "total-ip": "http://totalips:80",
+    "empty-ip": "http://emptyips:80",
+    "valid-ip": "http://validips:80",
+    "bad-ip": "http://badips:80",
+    "classify-ip": "http://classifier:80",
+    "country-ip": "http://countryinfo:80",
+    "save": "http://save:80",
+    "load": "http://save:80"
   }
 }

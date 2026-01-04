@@ -8,7 +8,7 @@ import java.net.InetSocketAddress;
  * Server handling for Classifier.java functionality
  */
 public class Server{
-    private static final int PORT = 83;
+    private static final int PORT = 80;
     private static final String HOST = "0.0.0.0";
     public static void main(String[] args)throws Exception{
         System.out.println("Test");

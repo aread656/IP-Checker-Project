@@ -4,7 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-PORT = 81
+PORT = 80
 HOST = "0.0.0.0"
 
 @app.route("/", methods = ["GET"])

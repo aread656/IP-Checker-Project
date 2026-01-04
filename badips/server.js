@@ -1,6 +1,6 @@
 'use strict';
 const express = require('express');
-const PORT = 82;
+const PORT = 80;
 const HOST = '0.0.0.0';
 var badips = require('./badips');
 const app = express();

@@ -39,7 +39,7 @@ vector<string> parse_items(const string &items){
  * https://raw.githubusercontent.com/yhirose/cpp-httplib/refs/heads/master/httplib.h
  */
 int main(){
-    int const PORT = 84;
+    int const PORT = 80;
     string const HOST = "0.0.0.0";
     httplib::Server server;
     server.Get("/", [](const httplib::Request &req, httplib::Response &res) {
